@@ -2,7 +2,7 @@
 import json
 import twitter
 
-
+#Anıl push deneme
 
 # Variables that contains the user credentials to access Twitter API
 ACCESS_TOKEN = 'YOUR ACCESS TOKEN"'
