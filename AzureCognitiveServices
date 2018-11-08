@@ -1,0 +1,58 @@
+import config
+import requests
+from pprint import pprint
+import http.client, urllib.request, urllib.parse, urllib.error, base64
+
+text_analytics_base_url = "https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0/"
+language_api_url = text_analytics_base_url + "languages"
+headers   = {"Ocp-Apim-Subscription-Key": config.AZURE_SENTIMENT_ANALYSIS_KEY}
+
+documents = { 'documents': [
+    { 'id': '1', 'text': 'This is a document written in English.' },
+    { 'id': '2', 'text': 'Este es un document escrito en Español.' },
+    { 'id': '3', 'text': '这是一个用中文写的文件' }
+]}
+
+response  = requests.post(language_api_url, headers=headers, json=documents)
+languages = response.json()
+pprint(languages)
+
+documents = {'documents' : [
+  {'id': '1', 'language': 'en', 'text': 'I had a wonderful experience! The rooms were wonderful and the staff was helpful.'},
+  {'id': '2', 'language': 'en', 'text': 'I had a terrible time at the hotel. The staff was rude and the food was awful.'},
+  {'id': '3', 'language': 'es', 'text': 'Los caminos que llevan hasta Monte Rainier son espectaculares y hermosos.'},
+  {'id': '4', 'language': 'es', 'text': 'La carretera estaba atascada. Había mucho tráfico el día de ayer.'}
+]}
+
+sentiment_api_url = text_analytics_base_url + "sentiment"
+
+
+response  = requests.post(sentiment_api_url, headers=headers, json=documents)
+sentiments = response.json()
+pprint(sentiments)
+
+
+key_phrase_api_url = text_analytics_base_url + "keyPhrases"
+documents = {'documents' : [
+  {'id': '1', 'language': 'en', 'text': 'I had a wonderful experience! The rooms were wonderful and the staff was helpful.'},
+  {'id': '2', 'language': 'en', 'text': 'I had a terrible time at the hotel. The staff was rude and the food was awful.'},
+  {'id': '3', 'language': 'es', 'text': 'Los caminos que llevan hasta Monte Rainier son espectaculares y hermosos.'},
+  {'id': '4', 'language': 'es', 'text': 'La carretera estaba atascada. Había mucho tráfico el día de ayer.'}
+]}
+
+response  = requests.post(key_phrase_api_url, headers=headers, json=documents)
+key_phrases = response.json()
+pprint(key_phrases)
+
+
+
+entity_linking_api_url = text_analytics_base_url + "entities"
+
+documents = {'documents' : [
+  {'id': '1', 'text': 'Jeff bought three dozen eggs because there was a 50% discount.'},
+  {'id': '2', 'text': 'The Great Depression began in 1929. By 1933, the GDP in America fell by 25%.'}
+]}
+
+response  = requests.post(entity_linking_api_url, headers=headers, json=documents)
+entities = response.json()
+print(entities)
