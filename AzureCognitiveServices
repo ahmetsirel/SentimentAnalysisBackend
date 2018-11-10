@@ -1,12 +1,16 @@
 import sys
 import os
+
+CWD = os.getcwd()
+PACKAGES = '/venv/lib/site-packages'
+sys.path.append(CWD+PACKAGES)
+
+
 import config
 import requests
 from pprint import pprint
 import http.client, urllib.request, urllib.parse, urllib.error, base64
-CWD = os.getcwd()
-PACKAGES = '/venv/lib/python3.6/site-packages'
-sys.path.append(CWD+PACKAGES)
+
 
 text_analytics_base_url = "https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0/"
 language_api_url = text_analytics_base_url + "languages"
